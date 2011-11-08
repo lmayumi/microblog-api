@@ -24,13 +24,21 @@
 )
 
 (defn get-post [post-id]
+  (get-in @storage [:id-index post-id])
 )
 
-(defn timeline [offset n]
-)
+(defn timeline [offset post-count]
+  (->> @storage
+    :time-index
+    (drop offset)
+    (take post-count)))
+
 
 ;test code
-(save-post {:id 1 :text "ass-sock"})
-(save-post {:id 2 :text "suck it clojure"})
-(save-post {:id 3 :text "1958 called, they want their language back."})
-@storage
+;(save-post {:id 1 :text "ass-sock"})
+;(save-post {:id 2 :text "suck it clojure"})
+;(save-post {:id 3 :text "1958 called, they want their language back."})
+;@storage
+
+;(get-post 3)
+;(timeline 0 1)
