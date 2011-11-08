@@ -10,8 +10,11 @@
 
 (defn save-post [post]
   (swap! storage (fn [storage]
-                   (update-in storage [:id-index] assoc (:id post) post)
-                   ))
+                   (->
+                     storage
+                     (update-in [:id-index] assoc (:id post) post)
+                     (update-in [:time-index] conj post)
+                   )))
   post
   )
 
@@ -26,3 +29,8 @@
 (defn timeline [offset n]
 )
 
+;test code
+(save-post {:id 1 :text "ass-sock"})
+(save-post {:id 2 :text "suck it clojure"})
+(save-post {:id 3 :text "1958 called, they want their language back."})
+@storage
